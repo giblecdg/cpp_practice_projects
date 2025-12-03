@@ -1,8 +1,11 @@
 #include <iostream>
 #include <cstdlib>
 #include <string>
+#include <limits>
 
 void clearScreen(), doArithmetic(), doPower(), doRoot(), doTrigonometric(), settingsMenu(), printHelp();
+
+bool inputInteger(std::string prompt, std::string errorPrint, int &userValue);
 
 int main()
 {
@@ -20,15 +23,9 @@ int main()
         std::cout << "6) Help\n";
         std::cout << "7) Quit\n\n";
 
-        std::cout << "Enter your choice: ";
-
         int userChoice = 0;
         
-        if(!(std::cin >> userChoice)) {
-            std::cin.clear();
-            std::cin.ignore(10000, '\n');
-            clearScreen(); std::cout << "Wrong option. Please try again.\n\n";
-        }
+        inputInteger("Enter your choice: ", "", userChoice);
         
         switch (userChoice)
         {
@@ -44,6 +41,22 @@ int main()
     }
 }
 
+// void doArithmetic() {
+//     clearScreen();
+
+//     auto a = 0;
+//     auto b = 0;
+
+//     while (true) 
+//     {
+//         if (!inputInteger("Please enter a: ", "This is not a number", a)) { continue; }
+//         if (!inputInteger("Please enter b: ", "This is not a number", b)) { continue; }
+
+//         std::cout << a << " + " << b << " = " << a+b << "\n\n";
+//         break; 
+//     }
+// }
+
 void clearScreen()
 {
     #if defined(_WIN32) || defined(_WIN64)
@@ -51,4 +64,16 @@ void clearScreen()
     #else
         system("clear");
     #endif
+}
+
+bool inputInteger(std::string prompt, std::string errorPrint, int &userValue) {
+    std::cout << prompt;
+
+    if(!(std::cin >> userValue)) {
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        clearScreen(); std::cout << errorPrint << "\n";
+        return false;
+    }
+    return true;
 }
