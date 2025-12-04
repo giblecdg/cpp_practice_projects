@@ -29,7 +29,7 @@ int main()
         
         switch (userChoice)
         {
-            // case 1: doArithmetic(); break;
+            case 1: doArithmetic(); break;
             // case 2: doPower(); break;
             // case 3: doRoot(); break;
             // case 4: doTrigonometric(); break;
@@ -41,21 +41,21 @@ int main()
     }
 }
 
-// void doArithmetic() {
-//     clearScreen();
+void doArithmetic() {
+    clearScreen();
 
-//     auto a = 0;
-//     auto b = 0;
+    auto a = 0;
+    auto b = 0;
 
-//     while (true) 
-//     {
-//         if (!inputInteger("Please enter a: ", "This is not a number", a)) { continue; }
-//         if (!inputInteger("Please enter b: ", "This is not a number", b)) { continue; }
+    while (true) 
+    {
+        if (!inputInteger("Please enter a: ", "This is not a number", a)) { continue; }
+        if (!inputInteger("Please enter b: ", "This is not a number", b)) { continue; }
 
-//         std::cout << a << " + " << b << " = " << a+b << "\n\n";
-//         break; 
-//     }
-// }
+        std::cout << a << " + " << b << " = " << a+b << "\n\n";
+        break; 
+    }
+}
 
 void clearScreen()
 {
