@@ -30,8 +30,7 @@ The project is actively being developed.
 ### Using g++
 
 ```bash
-g++ -std=c++17 -O2 main.cpp -o program
-./program
+g++ main.cpp -o main && ./main
 ```
 
 ### Using CMake
