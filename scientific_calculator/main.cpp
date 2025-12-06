@@ -5,7 +5,9 @@
 
 void clearScreen(), doArithmetic(), doPower(), doRoot(), doTrigonometric(), settingsMenu(), printHelp();
 
-bool inputInteger(std::string prompt, std::string errorPrint, int &userValue);
+bool inputDouble(std::string prompt, std::string errorPrint, double &userValue);
+
+int inputUserChoice(int min, int max);
 
 int main()
 {
@@ -22,10 +24,8 @@ int main()
         std::cout << "5) Settings (degrees/radians)\n";
         std::cout << "6) Help\n";
         std::cout << "7) Quit\n\n";
-
-        int userChoice = 0;
         
-        inputInteger("Enter your choice: ", "", userChoice);
+        int userChoice = inputUserChoice(1, 7);
         
         switch (userChoice)
         {
@@ -35,22 +35,23 @@ int main()
             // case 4: doTrigonometric(); break;
             // case 5: settingsMenu(); break;
             // case 6: printHelp(); break;
-            case 7: clearScreen(); std::cout << "Quitting...\n\n"; return 0;
-            default: clearScreen(); std::cout << "Wrong option. Please try again.\n\n"; break;
+            case 7: clearScreen(); std::cout << "Quitting...\n"; return 0;
+            default: std::cout << "\nWrong option. Please try again."; break;
         }
     }
 }
 
-void doArithmetic() {
+void doArithmetic() 
+{
     clearScreen();
 
-    auto a = 0;
-    auto b = 0;
+    double a = 0;
+    double b = 0;
 
     while (true) 
     {
-        if (!inputInteger("Please enter a: ", "This is not a number", a)) { continue; }
-        if (!inputInteger("Please enter b: ", "This is not a number", b)) { continue; }
+        if (!inputDouble("Please enter a: ", "This is not a number", a)) { continue; }
+        if (!inputDouble("Please enter b: ", "This is not a number", b)) { continue; }
 
         std::cout << a << " + " << b << " = " << a+b << "\n\n";
         break; 
@@ -66,14 +67,46 @@ void clearScreen()
     #endif
 }
 
-bool inputInteger(std::string prompt, std::string errorPrint, int &userValue) {
+bool inputDouble(std::string prompt, std::string errorPrint, double &userValue) 
+{
     std::cout << prompt;
 
-    if(!(std::cin >> userValue)) {
+    if(!(std::cin >> userValue)) 
+    {
         std::cin.clear();
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        clearScreen(); std::cout << errorPrint << "\n";
+        clearScreen(); 
+        std::cout << errorPrint << "\n" ;
         return false;
     }
     return true;
+}
+
+int inputUserChoice(int min, int max) 
+{   
+    int userChoice;
+
+    while (true)
+    {
+        std::cout << "Enter your choice: ";
+
+        if ((std::cin >> userChoice))
+        {
+            if (min <= userChoice && userChoice <= max)
+            {
+                std::cin.clear();
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                return userChoice;
+            }
+
+            std::cout << "\nWrong option. Please try again.\n";
+        }
+        else
+        {
+            std::cout << "\nWrong option. Please try again.\n";
+        }
+
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    }
 }
