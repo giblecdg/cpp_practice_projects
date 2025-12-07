@@ -2,12 +2,11 @@
 #include <cstdlib>
 #include <string>
 #include <limits>
-#include <chrono>
-#include <thread>
+#include <cctype>
 
 void clearScreen(), doArithmetic(), doPower(), doRoot(), doTrigonometric(), settingsMenu(), printHelp();
 
-bool inputDouble(std::string prompt, std::string errorPrint, double &userValue);
+bool inputDouble(std::string prompt, std::string errorPrint, double &userValue), isInt(const std::string &s);
 
 int inputUserChoice(int min, int max);
 
@@ -26,7 +25,19 @@ int main()
         std::cout << "6) Help\n";
         std::cout << "7) Quit\n\n";
         
-        int userChoice = inputUserChoice(1, 7);
+        // int userChoice = inputUserChoice(1, 7);
+        std::string userInput;
+        std::cout << "Enter your choice: ";
+        std::cin >> userInput;
+
+        if(!(isInt(userInput))) {
+            std::cout << "Wrong option. Please try again.\n";
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            continue;
+        }
+
+        int userChoice = std::stoi(userInput);
         
         switch (userChoice)
         {
@@ -39,9 +50,12 @@ int main()
             case 7:
                 clearScreen(); 
                 std::cout << "Quitting...\n";
-                std::this_thread::sleep_for(std::chrono::seconds(1));
                 return 0;
-            default: break;
+            default:
+                std::cout << "Wrong option. Please try again.\n";
+                std::cin.clear();
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); 
+                break;
         }
     }
 }
@@ -57,6 +71,9 @@ void doArithmetic()
     {
         if (!inputDouble("Please enter a: ", "Error. This is not a number", a)) { continue; }
         if (!inputDouble("Please enter b: ", "Error. This is not a number", b)) { continue; }
+
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
         char userChoice;
         std::cout << "\n+ : ADD";
@@ -82,7 +99,6 @@ void doArithmetic()
                 if (b == 0)
                 {
                     std::cout << "Error. You can't divide by 0\n";
-                    std::this_thread::sleep_for(std::chrono::seconds(2));
                     break;
                 }
 
@@ -90,7 +106,6 @@ void doArithmetic()
                 break;
             default:
                 std::cout << "Wrong option. Please try again.\n";
-                std::this_thread::sleep_for(std::chrono::seconds(2));
                 break;
         }
         std::cin.clear();
@@ -123,31 +138,18 @@ bool inputDouble(std::string prompt, std::string errorPrint, double &userValue)
     return true;
 }
 
-int inputUserChoice(int min, int max) 
-{   
-    int userChoice;
+bool isInt(const std::string &s)
+{
+    if(s.empty()) return false;
 
-    while (true)
+    int start = (s[0] == '-') ? 1 : 0;
+
+    if (start == 1 && s.size() == 1) return false;
+
+    for (int i = start; i < s.size(); i++)
     {
-        std::cout << "Enter your choice: ";
-
-        if ((std::cin >> userChoice))
-        {
-            if (min <= userChoice && userChoice <= max)
-            {
-                std::cin.clear();
-                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-                return userChoice;
-            }
-
-            std::cout << "Wrong option. Please try again.\n";
-        }
-        else
-        {
-            std::cout << "Wrong option. Please try again.\n";
-        }
-
-        std::cin.clear();
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        if (!isdigit(s[i])) return false;
     }
+
+    return true;
 }
