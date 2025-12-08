@@ -33,16 +33,6 @@ The project is actively being developed.
 g++ main.cpp -o main && ./main
 ```
 
-### Using CMake
-
-```bash
-mkdir build
-cd build
-cmake ..
-make
-./program
-```
-
 ---
 
 ## 🤝 Contributing
