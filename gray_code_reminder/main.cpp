@@ -88,8 +88,8 @@ int main()
             std::cout << "Quitting...\n";
             return 0;
         default:
-            std::cout << "Wrong choice. Try again.\n";
             system("clear");
+            std::cout << "Wrong choice. Try again.\n\n";
             break;
         }
     }
