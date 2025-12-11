@@ -62,7 +62,7 @@ int main()
 
     while (true)
     {
-        std::cout << "---- Gray Code Karnaugh Map reminder ----\n";
+        std::cout << "--- Gray Code Karnaugh Map reminder ---\n";
         std::cout << "Enter Gray's collumn you want to learn.\n";
         std::cout << "1. AB Column.\n";
         std::cout << "2. CDE Column.\n";
